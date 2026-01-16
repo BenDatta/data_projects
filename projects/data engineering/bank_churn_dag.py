@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+
 import pandas as pd
 from airflow import DAG  # type: ignore
 from airflow.decorators import task  # type: ignore
@@ -26,10 +27,14 @@ with DAG(
             "projects/data engineering/data/bank_churn/Bank_Churn_all_data.xlsx"
         )
 
-        customer = pd.read_excel(file_path, sheet_name="Customer_Info", engine="openpyxl")
-        acc_info = pd.read_excel(file_path, sheet_name="Account_Info", engine="openpyxl")
+        customer = pd.read_excel(
+            file_path, sheet_name="Customer_Info", engine="openpyxl"
+        )
+        acc_info = pd.read_excel(
+            file_path, sheet_name="Account_Info", engine="openpyxl"
+        )
 
-        # In Airflow TaskFlow, it's often easier to return dataframes directly 
+        # In Airflow TaskFlow, it's often easier to return dataframes directly
         # for local testing, or dictionary of dataframes.
         return {"customer": customer, "acc_info": acc_info}
 
