@@ -21,11 +21,17 @@ with DAG(
 
     @task
     def welcome_df():
+        """
+        Simple task to print hello.
+        """
         print("Hello world")
         return "Hello world"
 
     @task
     def goodnight():
+        """
+        Simple task to print night time message.
+        """
         print("It is night time")
         return "It is night time"
 
