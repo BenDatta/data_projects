@@ -24,19 +24,20 @@ with DAG(
     def extract_data():
         base_path = "/tmp/bank_churn"
         file_path = (
-            "/Users/benjamin/Documents/GitHub/python_data_analysis/projects/"
-            "data engineering/data/bank_churn/Bank_Churn_all_data.xlsx"
+            "/Users/benjamin/Documents/GitHub/python_data_analysis/"
+            "projects/data engineering/data/bank_churn/Bank_Churn_all_data.xlsx"
         )
 
         customer_path = f"{base_path}/customer.parquet"
         acc_path = f"{base_path}/account.parquet"
 
-        pd.read_excel(file_path, sheet_name="Customer_Info", engine="openpyxl").to_parquet(
-            customer_path
-        )
-        pd.read_excel(file_path, sheet_name="Account_Info", engine="openpyxl").to_parquet(
-            acc_path
-        )
+        pd.read_excel(
+            file_path, sheet_name="Customer_Info", engine="openpyxl"
+        ).to_parquet(customer_path)
+
+        pd.read_excel(
+            file_path, sheet_name="Account_Info", engine="openpyxl"
+        ).to_parquet(acc_path)
 
         return {"customer_path": customer_path, "acc_path": acc_path}
 
@@ -53,7 +54,10 @@ with DAG(
         bank_churn["Age"] = pd.to_numeric(bank_churn["Age"], errors="coerce").fillna(0).astype(int)
 
         bank_churn["Balance"] = (
-            pd.to_numeric(bank_churn["Balance"].replace("€", "", regex=True), errors="coerce")
+            pd.to_numeric(
+                bank_churn["Balance"].replace("€", "", regex=True),
+                errors="coerce",
+            )
             .fillna(0)
             .astype(float)
         )
