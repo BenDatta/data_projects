@@ -1,11 +1,10 @@
 from datetime import datetime, timedelta
 
-from airflow.decorators import task
+from airflow import DAG  # type: ignore
+from airflow.decorators import task  # type: ignore
 
-from airflow import DAG
-
-# Define settings
-my_settings = {
+# Default DAG arguments
+default_args = {
     "owner": "analytics_team",
     "retries": 2,
     "retry_delay": timedelta(minutes=5),
@@ -15,9 +14,9 @@ with DAG(
     dag_id="simple_dag_modern",
     start_date=datetime(2020, 10, 1),
     schedule="@daily",
-    default_args=my_settings,
+    default_args=default_args,
     catchup=False,
-    tags=["engineering"],  # Must be a list []
+    tags=["engineering"],
 ) as dag:
 
     @task
@@ -27,8 +26,8 @@ with DAG(
 
     @task
     def goodnight():
-        print("it is night time")
-        return "it is night time"
+        print("It is night time")
+        return "It is night time"
 
-    # In TaskFlow, you just call the functions to create dependencies
+    # Set dependencies using TaskFlow
     welcome_df() >> goodnight()

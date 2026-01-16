@@ -1,10 +1,10 @@
 from datetime import datetime, timedelta
 
 import pandas as pd
-from airflow import DAG
-from airflow.decorators import task
+from airflow import DAG  # type: ignore
+from airflow.decorators import task  # type: ignore
 
-
+# Default DAG arguments
 default_args = {
     "owner": "analytics_team",
     "retries": 2,
@@ -24,10 +24,10 @@ with DAG(
     def extract_data():
         base_path = "/tmp/bank_churn"
         file_path = (
-            "/Users/benjamin/Documents/GitHub/python_data_analysis/projects/data engineering/"
-            "data/bank_churn/Bank_Churn_all_data.xlsx"
+            "/Users/benjamin/Documents/GitHub/python_data_analysis/"
+            "projects/data engineering/data/bank_churn/Bank_Churn_all_data.xlsx"
         )
-        
+
         customer_path = f"{base_path}/customer.parquet"
         acc_path = f"{base_path}/account.parquet"
 
@@ -46,19 +46,18 @@ with DAG(
         customer = data_dict["customer"]
         acc_info = data_dict["acc_info"]
 
-        bank_churn = customer.merge(
-            acc_info, how="inner", on="CustomerId"
-        ).drop_duplicates()
+        bank_churn = customer.merge(acc_info, how="inner", on="CustomerId").drop_duplicates()
+
         bank_churn["Geography"] = bank_churn["Geography"].replace(
             {"FRA": "France", "French": "France"}
         )
-        bank_churn["Age"] = (
-            pd.to_numeric(bank_churn["Age"], errors="coerce").fillna(0).astype(int)
-        )
+        bank_churn["Age"] = pd.to_numeric(bank_churn["Age"], errors="coerce").fillna(0).astype(int)
 
-        bank_churn["Balance"] = bank_churn["Balance"].replace("€", "", regex=True)
         bank_churn["Balance"] = (
-            pd.to_numeric(bank_churn["Balance"], errors="coerce")
+            pd.to_numeric(
+                bank_churn["Balance"].replace("€", "", regex=True),
+                errors="coerce",
+            )
             .fillna(0)
             .astype(float)
         )
@@ -72,11 +71,7 @@ with DAG(
 
     @task
     def dim_customer(bank_churn):
-        dim_cust = (
-            bank_churn[["CustomerId", "Surname", "Age", "Gender"]]
-            .copy()
-            .reset_index(drop=True)
-        )
+        dim_cust = bank_churn[["CustomerId", "Surname", "Age", "Gender"]].copy().reset_index(drop=True)
         dim_cust["Customer_key"] = dim_cust.index + 1
         return dim_cust
 
@@ -88,9 +83,7 @@ with DAG(
 
     @task
     def fact_bank_transactions(bank_churn, dim_cust, dim_count):
-        fact = bank_churn.merge(
-            dim_cust[["CustomerId", "Customer_key"]], on="CustomerId"
-        )
+        fact = bank_churn.merge(dim_cust[["CustomerId", "Customer_key"]], on="CustomerId")
         fact = fact.merge(dim_count[["Geography", "Country_key"]], on="Geography")
 
         return fact[
@@ -108,7 +101,7 @@ with DAG(
             ]
         ]
 
-    # Pipeline Flow
+    # DAG pipeline
     raw_data = extract_data()
     clean_df = transform(raw_data)
 
