@@ -1,11 +1,9 @@
 from datetime import datetime, timedelta
 
-from airflow import DAG
-
+import pandas as pd
 from airflow.decorators import task
 
-import pandas as pd
-
+from airflow import DAG
 
 default_args = {
     "owner": "analytics_team",
@@ -39,7 +37,6 @@ with DAG(
         ).to_parquet(acc_path)
 
         return {"customer_path": customer_path, "acc_path": acc_path}
-
 
     @task
     def transform(data_dict):

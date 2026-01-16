@@ -1,8 +1,8 @@
 from datetime import datetime, timedelta
 
-from airflow import DAG
-
 from airflow.decorators import task
+
+from airflow import DAG
 
 # Define settings
 my_settings = {
