@@ -1,2 +1,7 @@
 pandas
 pathlib
+apache-airflow
+requests
+numpy
+openpyxl
+# csv is part of the Python standard library; no need to add to requirements
