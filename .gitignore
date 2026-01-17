@@ -1,80 +1,28 @@
-# Byte-compiled / optimized / DLL files
-airflow-venv/
+# Python
 __pycache__/
 *.pyc
-airflow/airflow/airflow.db
-airflow/airflow/logs/
-
-# Virtual environment
-venv/
-.env/
-.envrc
-
-# Jupyter Notebook checkpoints
-.ipynb_checkpoints
-
-# Data files
-*.xls
-*.parquet
-*.h5
-*.db
-*.sqlite3
-
-# Airflow logs and configs
-airflow/airflow.db
-airflow/logs/
-airflow/unittests.cfg
-latest
-# SQLite temporary files
-airflow.db-shm
-airflow.db-wal
-
-# System files
-.DS_Store
-Thumbs.db
-
-# VSCode settings
-.vscode/
-
-# Python environment files
 *.egg-info/
-.eggs/
 dist/
 build/
 
-# Credentials and secrets
-*.env
-*.secret
-*.key
-*.pem
-*.p12
-*.crt
-*.der
-*.cer
-*.pfx
-*.p7b
-*.p7c
-*.jks
-*.keystore
-*.srl
-*.csr
-*.p8
-*.p7s
-*.p10
-*.cfg
-*.ini
+# Virtual environments
+venv/
+airflow-venv/
+.env
 
-# Simple auth password or credentials
-simple_auth_password.txt
-simple_auth_manager_passwords.json
-*password*
-*secret*
-*credential*
-*token*
+# Airflow
+airflow.db
+airflow.db-shm
+airflow.db-wal
+airflow/logs/
 
-# Misc
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE / OS
+.vscode/
+.DS_Store
+
+# Logs & temp
 *.log
-*.bak
 *.tmp
-*.swp
-*.swo
