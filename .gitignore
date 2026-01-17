@@ -1,28 +1,94 @@
-# Python
+# =========================
+# Python cache & artifacts
+# =========================
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
 *.egg-info/
+.eggs/
 dist/
 build/
 
+# =========================
 # Virtual environments
+# =========================
 venv/
 airflow-venv/
 .env
+.envrc
 
+# =========================
+# Jupyter
+# =========================
+.ipynb_checkpoints/
+
+# =========================
 # Airflow
+# =========================
 airflow.db
 airflow.db-shm
 airflow.db-wal
 airflow/logs/
+airflow/unittests.cfg
+latest
 
-# Jupyter
-.ipynb_checkpoints/
+# =========================
+# Databases & data files
+# =========================
+*.db
+*.sqlite3
+*.parquet
+*.h5
+*.xls
 
-# IDE / OS
-.vscode/
-.DS_Store
-
-# Logs & temp
+# =========================
+# Logs & temp files
+# =========================
 *.log
 *.tmp
+*.bak
+*.swp
+*.swo
+
+# =========================
+# IDEs & OS files
+# =========================
+.vscode/
+.DS_Store
+Thumbs.db
+
+# =========================
+# Credentials & secrets
+# =========================
+*.env
+*.secret
+*.key
+*.pem
+*.p12
+*.crt
+*.cer
+*.der
+*.pfx
+*.p7b
+*.p7c
+*.p7s
+*.p8
+*.p10
+*.jks
+*.keystore
+*.srl
+*.csr
+*.cfg
+*.ini
+
+*password*
+*secret*
+*credential*
+*token*
+
+# =========================
+# Auth files
+# =========================
+simple_auth_password.txt
+simple_auth_manager_passwords.json
