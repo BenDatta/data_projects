@@ -21,9 +21,7 @@ with DAG(
 
     @task
     def extract_data():
-        file_path = (
-            "/opt/airflow/data/Bank_Churn_all_data.xlsx"
-        )
+        file_path = "/opt/airflow/data/Bank_Churn_all_data.xlsx"
 
         customer = pd.read_excel(
             file_path, sheet_name="Customer_Info", engine="openpyxl"
