@@ -1,6 +1,6 @@
 pandas
-pathlib
-apache-airflow
-requests
 numpy
+requests
 openpyxl
+sqlalchemy
+psycopg2-binary

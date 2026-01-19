@@ -4,7 +4,6 @@ import pandas as pd
 from airflow import DAG  # type: ignore
 from airflow.decorators import task  # type: ignore
 
-# Default DAG arguments
 default_args = {
     "owner": "analytics_team",
     "retries": 2,
@@ -23,8 +22,7 @@ with DAG(
     @task
     def extract_data():
         file_path = (
-            "/Users/benjamin/Documents/GitHub/python_data_analysis/"
-            "projects/data engineering/data/bank_churn/Bank_Churn_all_data.xlsx"
+            "/opt/airflow/data/Bank_Churn_all_data.xlsx"
         )
 
         customer = pd.read_excel(
@@ -33,14 +31,10 @@ with DAG(
         acc_info = pd.read_excel(
             file_path, sheet_name="Account_Info", engine="openpyxl"
         )
-
-        # In Airflow TaskFlow, it's often easier to return dataframes directly
-        # for local testing, or dictionary of dataframes.
         return {"customer": customer, "acc_info": acc_info}
 
     @task
     def transform(data_dict):
-        # FIX: Accessing the dataframes from the dictionary returned by extract_data
         customer = data_dict["customer"]
         acc_info = data_dict["acc_info"]
 
@@ -109,7 +103,6 @@ with DAG(
             ]
         ]
 
-    # Pipeline Flow
     raw_data = extract_data()
     clean_df = transform(raw_data)
     cust_df = dim_customer(clean_df)
