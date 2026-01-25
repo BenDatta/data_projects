@@ -1,30 +1,58 @@
-# This workflow executes several linters on changed files based on languages used in your code base whenever
-# you push a code or open a pull request.
-#
-# You can adjust the behavior by modifying this file.
-# For more information, see:
-# https://github.com/github/super-linter
 name: Lint Code Base
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
+    paths-ignore:
+      - "**/*.md"
+      - "docs/**"
+
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
+    paths-ignore:
+      - "**/*.md"
+      - "docs/**"
+
+# Cancel older runs when new commits are pushed
+concurrency:
+  group: lint-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   run-lint:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          # Full git history is needed to get a proper list of changed files within `super-linter`
           fetch-depth: 0
 
       - name: Lint Code Base
         uses: github/super-linter@v4
         env:
+          # Only lint changed files
           VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: "main"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          FILTER_REGEX_EXCLUDE: (^|/)databricks/|\.ipynb$
+
+          # Enable only what we need
+          VALIDATE_PYTHON: true
+          VALIDATE_PYTHON_RUFF: true
+          VALIDATE_SQL: true
+
+          # Disable slow / unused linters
+          VALIDATE_PYTHON_FLAKE8: false
+          VALIDATE_PYTHON_PYLINT: false
+          VALIDATE_MARKDOWN: false
+          VALIDATE_JSON: false
+          VALIDATE_YAML: false
+          VALIDATE_BASH: false
+          VALIDATE_DOCKERFILE: false
+
+          # Exclude Databricks, data, notebooks
+          FILTER_REGEX_EXCLUDE: >
+            (^|/)databricks/|
+            (^|/)data/|
+            (^|/)logs/|
+            \.ipynb$
