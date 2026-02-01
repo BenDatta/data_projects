@@ -7,7 +7,6 @@ from data.flight_etl.bronze_ingest import get_flight_data
 from data.flight_etl.gold import run_gold_aggregate
 from data.flight_etl.silver_transform import silver_transform
 
-
 default_args = {
     "owner": "analytics_team",
     "retries": 2,
