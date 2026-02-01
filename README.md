@@ -188,29 +188,3 @@ This repository demonstrates:
 ✅ Containerizing data infrastructure with Docker  
 ✅ Processing data with Pandas and PySpark  
 ✅ Applying data engineering best practices  
-
----
-
-## 🤝 Contributing
-
-Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/BenDatta/data_projects/issues).
-
----
-
-## 📝 License
-
-This project is part of my data engineering portfolio. Feel free to explore and learn from the code!
-
----
-
-## 📬 Connect
-
-Questions or collaboration opportunities? Let's connect!
-
-[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/BenDatta)
-
----
-
-<div align="center">
-  <sub>Built with ❤️ for scalable data engineering</sub>
-</div>
