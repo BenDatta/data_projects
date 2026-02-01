@@ -1,25 +1,216 @@
-# 📊 Python Data Analysis
+# 🚀 Data Engineering & Analytics Portfolio
 
-A collection of my work exploring and visualizing datasets. This repository focuses on using **Pandas** for data manipulation and **Seaborn/Matplotlib** for creating clear visual insights.
+> *From raw data to actionable insights — building production-ready data pipelines and analytics solutions*
 
----
-
-## 📁 What’s Inside
-- **Jupyter Notebooks**: Hands-on analysis including data cleaning and exploration.  
-- **Visualizations**: Custom charts and graphs to explain data trends.  
-- **Workflows**: My process for handling raw data and preparing it for analysis.  
+A comprehensive showcase of data engineering projects featuring Apache Airflow orchestration, medallion architecture ETL pipelines, and scalable data processing workflows.
 
 ---
 
-## 🛠 Libraries Used
-- **Pandas**: Data loading, cleaning, and filtering.  
-- **Seaborn**: Statistical data visualization.  
-- **Matplotlib**: Customizing plot details and layouts.
-- **PySpark**: Analyzed large datasets with distributed computing.  
+## ✨ Highlights
+
+🎯 **Production-Ready Pipelines** — Automated ETL workflows orchestrated with Apache Airflow  
+⚙️ **Medallion Architecture** — Bronze → Silver → Gold data transformation layers  
+🐳 **Containerized Deployment** — Dockerized infrastructure for seamless deployment  
+📊 **End-to-End Solutions** — From data ingestion to analytics-ready datasets  
 
 ---
 
-## 🔍 Core Features
-- **EDA (Exploratory Data Analysis)**: Finding patterns and outliers in new datasets.  
-- **Data Cleaning**: Handling missing values and formatting data types.  
-- **Visual Storytelling**: Using the right charts to show correlations and distributions.  
+## 🏗️ Architecture
+
+```
+┌─────────────┐      ┌──────────────┐      ┌─────────────┐
+│   Bronze    │─────▶│    Silver    │─────▶│    Gold     │
+│ (Raw Data)  │      │ (Cleaned)    │      │ (Analytics) │
+└─────────────┘      └──────────────┘      └─────────────┘
+       ▲                    ▲                      ▲
+       └────────────────────┴──────────────────────┘
+                    Apache Airflow DAGs
+```
+
+---
+
+## 📁 Project Portfolio
+
+### 🛫 **Flight Data ETL Pipeline**
+**Tech Stack:** Apache Airflow · Python · Pandas · Medallion Architecture
+
+A robust ETL pipeline processing flight data through three transformation stages:
+- **Bronze Layer**: Raw data ingestion from external APIs
+- **Silver Layer**: Data cleaning, validation, and standardization
+- **Gold Layer**: Aggregated analytics and business metrics
+
+📂 [`dags/flight_dag.py`](dags/flight_dag.py) | [`data/flight_etl/`](data/flight_etl/)
+
+---
+
+### 🏦 **Bank Customer Churn Analytics**
+**Tech Stack:** Apache Airflow · Pandas · Excel/CSV Processing · SQL
+
+Automated daily processing of bank customer data to identify churn patterns:
+- Multi-sheet Excel data extraction
+- Customer and account information merging
+- Churn risk scoring and segmentation
+- Analytics-ready dataset generation
+
+📂 [`dags/bank_churn_dag.py`](dags/bank_churn_dag.py)
+
+---
+
+### 🚆 **Transport Data Pipeline**
+**Tech Stack:** Apache Airflow · Pandas · Parquet · Hourly Scheduling
+
+High-frequency ETL pipeline processing transport and city data:
+- Hourly data ingestion and processing
+- Parquet format optimization for analytics
+- Medallion architecture implementation
+- Scalable data transformation workflows
+
+📂 [`dags/transport_etl.py`](dags/transport_etl.py)
+
+---
+
+## 🛠️ Tech Stack
+
+### **Orchestration & Workflow**
+![Apache Airflow](https://img.shields.io/badge/Apache%20Airflow-017CEE?style=for-the-badge&logo=Apache%20Airflow&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+
+### **Data Processing**
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)
+![PySpark](https://img.shields.io/badge/Apache%20Spark-E25A1C?style=for-the-badge&logo=apachespark&logoColor=white)
+
+### **Data Storage**
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+![Parquet](https://img.shields.io/badge/Parquet-50ABF1?style=for-the-badge&logo=apache&logoColor=white)
+
+### **Analytics & Visualization**
+![Databricks](https://img.shields.io/badge/Databricks-FF3621?style=for-the-badge&logo=databricks&logoColor=white)
+![Matplotlib](https://img.shields.io/badge/Matplotlib-11557c?style=for-the-badge&logo=python&logoColor=white)
+![Seaborn](https://img.shields.io/badge/Seaborn-3776AB?style=for-the-badge&logo=python&logoColor=white)
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Docker & Docker Compose
+- Python 3.12+
+
+### Launch the Pipeline Environment
+
+```bash
+# Clone the repository
+git clone https://github.com/BenDatta/data_projects.git
+cd data_projects
+
+# Start Airflow with Docker Compose
+docker-compose up -d
+
+# Access Airflow UI
+# Navigate to http://localhost:8080
+```
+
+### Local Development
+
+```bash
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run linting
+ruff check .
+```
+
+---
+
+## 📊 Key Features
+
+### ⚡ **Automated Scheduling**
+- Daily, hourly, and custom schedules via Airflow
+- Automatic retry mechanisms with exponential backoff
+- Comprehensive logging and monitoring
+
+### 🎯 **Data Quality**
+- Validation at each transformation layer
+- Type checking and schema enforcement
+- Error handling and data reconciliation
+
+### 🔄 **Scalable Architecture**
+- Modular, reusable ETL components
+- Medallion architecture for data maturity
+- Containerized for cloud deployment
+
+### 📈 **Production Best Practices**
+- Version control with Git
+- Code quality enforcement (Ruff linting)
+- Comprehensive error handling
+- Retry logic and failure recovery
+
+---
+
+## 🗂️ Repository Structure
+
+```
+data_projects/
+├── dags/                      # Airflow DAG definitions
+│   ├── flight_dag.py         # Flight data ETL pipeline
+│   ├── bank_churn_dag.py     # Bank customer churn analysis
+│   └── transport_etl.py      # Transport data processing
+├── data/                      # Data modules and storage
+│   └── flight_etl/           # Flight pipeline implementation
+│       ├── bronze_ingest.py  # Raw data ingestion
+│       ├── silver_transform.py # Data cleaning & validation
+│       └── gold.py           # Analytics aggregations
+├── config/                    # Configuration files
+│   └── airflow.cfg           # Airflow settings
+├── projects/                  # Additional projects
+│   ├── data analysis/        # Jupyter notebooks & visualizations
+│   ├── databricks/           # Databricks notebooks
+│   └── PySpark/              # PySpark analytics
+├── docker-compose.yaml       # Container orchestration
+├── Dockerfile                # Airflow container definition
+└── requirements.txt          # Python dependencies
+```
+
+---
+
+## 📚 Learning & Exploration
+
+This repository demonstrates:
+
+✅ Building production-grade data pipelines  
+✅ Implementing medallion (Bronze-Silver-Gold) architecture  
+✅ Orchestrating complex workflows with Apache Airflow  
+✅ Containerizing data infrastructure with Docker  
+✅ Processing data with Pandas and PySpark  
+✅ Applying data engineering best practices  
+
+---
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/BenDatta/data_projects/issues).
+
+---
+
+## 📝 License
+
+This project is part of my data engineering portfolio. Feel free to explore and learn from the code!
+
+---
+
+## 📬 Connect
+
+Questions or collaboration opportunities? Let's connect!
+
+[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/BenDatta)
+
+---
+
+<div align="center">
+  <sub>Built with ❤️ for scalable data engineering</sub>
+</div>
