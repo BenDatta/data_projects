@@ -35,6 +35,11 @@ jobs:
           
           # Enable only Ruff for Python
           VALIDATE_PYTHON_RUFF: true
+          VALIDATE_PYTHON_FLAKE8: false
+          VALIDATE_PYTHON_PYLINT: false
+          VALIDATE_PYTHON_MYPY: false
+          VALIDATE_PYTHON_BLACK: false
+          VALIDATE_PYTHON_ISORT: false
           
           # Exclude notebooks, databricks, data folders, logs, and CSV files
           FILTER_REGEX_EXCLUDE: "(^|/)databricks/|(^|/)data/|(^|/)logs/|\\.ipynb$|\\.csv$"
