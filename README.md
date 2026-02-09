@@ -2,7 +2,7 @@
 
 > *From raw data to actionable insights — building production-ready data pipelines and analytics solutions*
 
-A comprehensive showcase of data engineering projects featuring Apache Airflow orchestration, medallion architecture ETL pipelines, and scalable data processing workflows.
+A comprehensive showcase of data engineering projects featuring Apache Airflow orchestration, medallion architecture ETL pipelines, Docker containerization, S3 bucket storage, and scalable data processing workflows.
 
 ---
 
@@ -11,7 +11,8 @@ A comprehensive showcase of data engineering projects featuring Apache Airflow o
 🎯 **Production-Ready Pipelines** — Automated ETL workflows orchestrated with Apache Airflow  
 ⚙️ **Medallion Architecture** — Bronze → Silver → Gold data transformation layers  
 🐳 **Containerized Deployment** — Dockerized infrastructure for seamless deployment  
-📊 **End-to-End Solutions** — From data ingestion to analytics-ready datasets  
+� **API Integration** — Real-time data ingestion from external APIs (Alpha Vantage, REST)  
+�📊 **End-to-End Solutions** — From data ingestion to analytics-ready datasets  
 
 ---
 
@@ -31,7 +32,20 @@ A comprehensive showcase of data engineering projects featuring Apache Airflow o
 
 ## 📁 Project Portfolio
 
-### 🛫 **Flight Data ETL Pipeline**
+### � **Market Data API Pipeline**
+**Tech Stack:** Apache Airflow · Alpha Vantage API · Pandas · XCom · Python 
+
+Real-time financial market data ingestion pipeline with automated weekly stock data collection:
+- **API Integration**: Alpha Vantage stock market data retrieval
+- **Data Flattening**: JSON to structured CSV transformation  
+- **XCom Integration**: Airflow task communication for downstream processing
+- **Time-Series Ready**: Clean date-indexed market analytics data
+
+📂 [`data/market_api_etl/bronze_data.py`](data/market_api_etl/bronze_data.py)
+
+---
+
+### �🛫 **Flight Data ETL Pipeline**
 **Tech Stack:** Apache Airflow · Python · Pandas · Medallion Architecture
 
 A robust ETL pipeline processing flight data through three transformation stages:
@@ -44,7 +58,7 @@ A robust ETL pipeline processing flight data through three transformation stages
 ---
 
 ### 🏦 **Bank Customer Churn Analytics**
-**Tech Stack:** Apache Airflow · Pandas · Excel/CSV Processing · SQL
+**Tech Stack:** Apache Airflow · Pandas · Excel/CSV Processing · SQL · Python
 
 Automated daily processing of bank customer data to identify churn patterns:
 - Multi-sheet Excel data extraction
@@ -57,7 +71,7 @@ Automated daily processing of bank customer data to identify churn patterns:
 ---
 
 ### 🚆 **Transport Data Pipeline**
-**Tech Stack:** Apache Airflow · Pandas · Parquet · Hourly Scheduling
+**Tech Stack:** Apache Airflow · Pandas · Parquet · Hourly Scheduling · Python
 
 High-frequency ETL pipeline processing transport and city data:
 - Hourly data ingestion and processing
@@ -79,6 +93,10 @@ High-frequency ETL pipeline processing transport and city data:
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)
 ![PySpark](https://img.shields.io/badge/Apache%20Spark-E25A1C?style=for-the-badge&logo=apachespark&logoColor=white)
+
+### **Data Sources & APIs**
+![Alpha Vantage](https://img.shields.io/badge/Alpha%20Vantage-00C853?style=for-the-badge&logo=chart-line&logoColor=white)
+![REST API](https://img.shields.io/badge/REST%20APIs-009688?style=for-the-badge&logo=fastapi&logoColor=white)
 
 ### **Data Storage**
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
@@ -161,10 +179,12 @@ data_projects/
 │   ├── bank_churn_dag.py     # Bank customer churn analysis
 │   └── transport_etl.py      # Transport data processing
 ├── data/                      # Data modules and storage
-│   └── flight_etl/           # Flight pipeline implementation
-│       ├── bronze_ingest.py  # Raw data ingestion
-│       ├── silver_transform.py # Data cleaning & validation
-│       └── gold.py           # Analytics aggregations
+│   ├── flight_etl/           # Flight pipeline implementation
+│   │   ├── bronze_ingest.py  # Raw data ingestion
+│   │   ├── silver_transform.py # Data cleaning & validation
+│   │   └── gold.py           # Analytics aggregations
+│   └── market_api_etl/       # Market data API pipeline
+│       └── bronze_data.py    # Stock market data ingestion
 ├── config/                    # Configuration files
 │   └── airflow.cfg           # Airflow settings
 ├── projects/                  # Additional projects
@@ -185,6 +205,8 @@ This repository demonstrates:
 ✅ Building production-grade data pipelines  
 ✅ Implementing medallion (Bronze-Silver-Gold) architecture  
 ✅ Orchestrating complex workflows with Apache Airflow  
+✅ Integrating external APIs for real-time data ingestion  
+✅ Using XCom for inter-task communication in Airflow  
 ✅ Containerizing data infrastructure with Docker  
 ✅ Processing data with Pandas and PySpark  
 ✅ Applying data engineering best practices  
