@@ -1,0 +1,66 @@
+name: Run Tests
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/**'
+      - 'dags/**'
+      - 'tests/**'
+      - 'requirements.txt'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'data/**'
+      - 'dags/**'
+      - 'tests/**'
+      - 'requirements.txt'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install apache-airflow
+      
+      - name: Get changed files
+        id: changed
+        run: |
+          echo "files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | tr '\n' ' ')" >> $GITHUB_OUTPUT
+          
+      - name: Run relevant tests
+        run: |
+          CHANGED="${{ steps.changed.outputs.files }}"
+          
+          # Run DAG tests if dags changed
+          if echo "$CHANGED" | grep -q "dags/"; then
+            pytest tests/test_dags.py -v --tb=short
+          fi
+          
+          # Run flight tests if flight ETL changed
+          if echo "$CHANGED" | grep -q "flight_etl\|flight_dag"; then
+            pytest tests/test_flight_etl.py -v --tb=short
+          fi
+          
+          # Run market tests if market ETL changed
+          if echo "$CHANGED" | grep -q "market_api_etl\|alpha_market"; then
+            pytest tests/test_market_etl.py -v --tb=short
+          fi
+          
+          # Run all tests if test files or requirements changed
+          if echo "$CHANGED" | grep -q "tests/conftest\|requirements.txt"; then
+            pytest tests/ -v --tb=short
+          fi
