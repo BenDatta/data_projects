@@ -95,8 +95,9 @@ class TestFlightSilverLayer:
 
     def test_silver_data_types(self, sample_flight_silver_df):
         """Verify silver data has correct data types."""
-        assert sample_flight_silver_df["icao24"].dtype == object
-        assert sample_flight_silver_df["origin_country"].dtype == object
+        # String columns can be object or StringDtype depending on pandas version
+        assert pd.api.types.is_string_dtype(sample_flight_silver_df["icao24"])
+        assert pd.api.types.is_string_dtype(sample_flight_silver_df["origin_country"])
         assert sample_flight_silver_df["velocity"].dtype == float
         assert sample_flight_silver_df["on_ground"].dtype == bool
 
