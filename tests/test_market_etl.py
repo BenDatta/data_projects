@@ -34,8 +34,8 @@ class TestMarketBronzeLayer:
 
     def test_bronze_numeric_values_as_strings(self, sample_market_bronze_df):
         """Verify Alpha Vantage returns numeric values as strings."""
-        # Alpha Vantage API returns numbers as strings
-        assert sample_market_bronze_df["1. open"].dtype == object
+        # Alpha Vantage API returns numbers as strings (object or StringDtype)
+        assert pd.api.types.is_string_dtype(sample_market_bronze_df["1. open"])
 
 
 class TestMarketSilverLayer:
