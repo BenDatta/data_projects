@@ -1,6 +1,7 @@
-import requests
 import os
+
 import pandas as pd
+import requests
 from airflow.models import Variable
 
 

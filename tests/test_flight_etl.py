@@ -3,25 +3,25 @@ Unit tests for Flight ETL pipeline.
 
 Tests cover:
 - Bronze layer: Data ingestion
-- Silver layer: Data transformation  
+- Silver layer: Data transformation
 - Gold layer: Aggregation
 - Data quality checks
 """
 
 import json
 import tempfile
-from pathlib import Path
 from unittest.mock import MagicMock, patch
 
 import pandas as pd
-import pytest
 
 
 class TestFlightBronzeLayer:
     """Tests for flight data bronze/ingestion layer."""
 
     @patch("data.flight_etl.bronze_ingest.requests.get")
-    def test_get_flight_data_success(self, mock_get, sample_flight_raw_data, mock_airflow_context):
+    def test_get_flight_data_success(
+        self, mock_get, sample_flight_raw_data, mock_airflow_context
+    ):
         """Test successful API data retrieval."""
         # Setup mock response
         mock_response = MagicMock()
@@ -29,21 +29,19 @@ class TestFlightBronzeLayer:
         mock_response.raise_for_status = MagicMock()
         mock_get.return_value = mock_response
 
-        with tempfile.TemporaryDirectory() as tmpdir:
+        with tempfile.TemporaryDirectory():
             with patch("data.flight_etl.bronze_ingest.Path") as mock_path:
                 mock_path.return_value.parent.mkdir = MagicMock()
-                
-                from data.flight_etl.bronze_ingest import get_flight_data
-                
+
                 # The function saves to a hardcoded path, so we verify the API call
                 mock_get.assert_not_called()  # Not called until function runs
-                
+
     def test_bronze_data_schema(self, sample_flight_raw_data):
         """Verify bronze data has expected schema."""
         assert "time" in sample_flight_raw_data
         assert "states" in sample_flight_raw_data
         assert isinstance(sample_flight_raw_data["states"], list)
-        
+
         # Each state should have 17 fields
         for state in sample_flight_raw_data["states"]:
             assert len(state) == 17, f"Expected 17 fields, got {len(state)}"
@@ -56,23 +54,38 @@ class TestFlightBronzeLayer:
 class TestFlightSilverLayer:
     """Tests for flight data silver/transformation layer."""
 
-    def test_silver_transform_column_mapping(self, bronze_flight_file, mock_airflow_context, temp_data_dir):
+    def test_silver_transform_column_mapping(
+        self, bronze_flight_file, mock_airflow_context, temp_data_dir
+    ):
         """Test that silver transform correctly maps columns."""
         # Read bronze data
         with open(bronze_flight_file) as f:
             raw = json.load(f)
-        
+
         df = pd.DataFrame(raw["states"])
-        
+
         expected_columns = [
-            "icao24", "callsign", "origin_country", "time_position",
-            "last_contact", "longitude", "latitude", "baro_altitude",
-            "on_ground", "velocity", "true_track", "vertical_rate",
-            "sensors", "geo_altitude", "squawk", "spi", "position_source"
+            "icao24",
+            "callsign",
+            "origin_country",
+            "time_position",
+            "last_contact",
+            "longitude",
+            "latitude",
+            "baro_altitude",
+            "on_ground",
+            "velocity",
+            "true_track",
+            "vertical_rate",
+            "sensors",
+            "geo_altitude",
+            "squawk",
+            "spi",
+            "position_source",
         ]
-        
+
         df.columns = expected_columns
-        
+
         assert list(df.columns) == expected_columns
 
     def test_silver_transform_selects_correct_columns(self, sample_flight_silver_df):
@@ -110,10 +123,10 @@ class TestFlightGoldLayer:
             )
             .reset_index()
         )
-        
+
         # Should have fewer rows than silver (grouped)
         assert len(agg) < len(sample_flight_silver_df)
-        
+
         # Should have aggregation columns
         assert "total_flights" in agg.columns
         assert "avg_velocity" in agg.columns
@@ -124,13 +137,13 @@ class TestFlightGoldLayer:
         us_flights = sample_flight_silver_df[
             sample_flight_silver_df["origin_country"] == "United States"
         ]
-        
+
         agg = (
             sample_flight_silver_df.groupby("origin_country")
             .agg(total_flights=("icao24", "count"))
             .reset_index()
         )
-        
+
         us_agg = agg[agg["origin_country"] == "United States"]
         assert us_agg["total_flights"].values[0] == len(us_flights)
 
@@ -139,13 +152,13 @@ class TestFlightGoldLayer:
         expected_us_avg = sample_flight_silver_df[
             sample_flight_silver_df["origin_country"] == "United States"
         ]["velocity"].mean()
-        
+
         agg = (
             sample_flight_silver_df.groupby("origin_country")
             .agg(avg_velocity=("velocity", "mean"))
             .reset_index()
         )
-        
+
         us_agg = agg[agg["origin_country"] == "United States"]
         assert us_agg["avg_velocity"].values[0] == expected_us_avg
 
@@ -181,29 +194,42 @@ class TestFlightEndToEnd:
         bronze_path = temp_data_dir / "bronze"
         bronze_path.mkdir(parents=True)
         bronze_file = bronze_path / "flights.json"
-        
+
         with open(bronze_file, "w") as f:
             json.dump(sample_flight_raw_data, f)
-        
+
         # Silver: Transform
         with open(bronze_file) as f:
             raw = json.load(f)
-        
+
         df = pd.DataFrame(raw["states"])
         df.columns = [
-            "icao24", "callsign", "origin_country", "time_position",
-            "last_contact", "longitude", "latitude", "baro_altitude",
-            "on_ground", "velocity", "true_track", "vertical_rate",
-            "sensors", "geo_altitude", "squawk", "spi", "position_source"
+            "icao24",
+            "callsign",
+            "origin_country",
+            "time_position",
+            "last_contact",
+            "longitude",
+            "latitude",
+            "baro_altitude",
+            "on_ground",
+            "velocity",
+            "true_track",
+            "vertical_rate",
+            "sensors",
+            "geo_altitude",
+            "squawk",
+            "spi",
+            "position_source",
         ]
-        
+
         silver_df = df[["icao24", "origin_country", "velocity", "on_ground"]]
-        
+
         silver_path = temp_data_dir / "silver"
         silver_path.mkdir(parents=True)
         silver_file = silver_path / "flights.csv"
         silver_df.to_csv(silver_file, index=False)
-        
+
         # Gold: Aggregate
         gold_df = (
             silver_df.groupby("origin_country")
@@ -214,17 +240,17 @@ class TestFlightEndToEnd:
             )
             .reset_index()
         )
-        
+
         gold_path = temp_data_dir / "gold"
         gold_path.mkdir(parents=True)
         gold_file = gold_path / "flights_agg.csv"
         gold_df.to_csv(gold_file, index=False)
-        
+
         # Verify all files exist
         assert bronze_file.exists()
         assert silver_file.exists()
         assert gold_file.exists()
-        
+
         # Verify data integrity
         final_df = pd.read_csv(gold_file)
         assert len(final_df) > 0
