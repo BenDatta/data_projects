@@ -4,8 +4,8 @@ from airflow import DAG
 from airflow.operators.python import PythonOperator  # type: ignore
 
 from data.market_api_etl.bronze_data import get_data
-from data.market_api_etl.silver_transform import silver_transform
 from data.market_api_etl.gold import gold_aggregate_table
+from data.market_api_etl.silver_transform import silver_transform
 
 default_args = {
     "owner": "analytics_team",

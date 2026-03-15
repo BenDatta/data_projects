@@ -4,3 +4,7 @@ requests
 openpyxl
 sqlalchemy
 psycopg2-binary
+beautifulsoup4
+pytest
+pytest-mock
+ruff
