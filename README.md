@@ -108,38 +108,35 @@ High-frequency ETL pipeline processing transport and city data:
 
 ---
 
-##  Quick Start
+### 🛒 **E-commerce Data Pipeline**
+**Tech Stack:** Apache Airflow · PostgreSQL · Pandas · SQL · Python
 
-### Prerequisites
-- Docker & Docker Compose
-- Python 3.12+
+Comprehensive e-commerce data ingestion pipeline for analytics:
+- **6 Data Sources**: Orders, order items, refunds, products, page views, and sessions
+- **Dynamic Schema Detection**: Automatic column discovery from PostgreSQL
+- **Bulk Data Loading**: Efficient CSV to PostgreSQL data transfer
+- **Upsert Support**: Replace-on-conflict for idempotent data loads
 
-### Launch the Pipeline Environment
+📂 [`dags/ecommerce_dag.py`](dags/ecommerce_dag.py) | [`data/ecommerce_pipeline/`](data/ecommerce_pipeline/)
+
+---
+
+## 🚀 Quick Start
 
 ```bash
 # Clone the repository
 git clone https://github.com/BenDatta/data_projects.git
 cd data_projects
 
+# Install Poetry and dependencies
+pip install poetry
+poetry install
+
+# Activate the environment
+poetry shell
+
 # Start Airflow with Docker Compose
-docker-compose up -d
-
-# Access Airflow UI
-# Navigate to http://localhost:8080
-```
-
-### Local Development
-
-```bash
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Run linting
-ruff check .
+docker compose up -d
 ```
 
 ---
@@ -176,14 +173,20 @@ data_projects/
 ├── dags/                      # Airflow DAG definitions
 │   ├── flight_dag.py         # Flight data ETL pipeline
 │   ├── bank_churn_dag.py     # Bank customer churn analysis
-│   └── transport_etl.py      # Transport data processing
+│   ├── transport_etl.py      # Transport data processing
+│   ├── ecommerce_dag.py      # E-commerce data pipeline
+│   └── sql/                   # SQL schemas
+│       └── create_tables.sql # E-commerce table definitions
 ├── data/                      # Data modules and storage
 │   ├── flight_etl/           # Flight pipeline implementation
 │   │   ├── bronze_ingest.py  # Raw data ingestion
 │   │   ├── silver_transform.py # Data cleaning & validation
 │   │   └── gold.py           # Analytics aggregations
-│   └── market_api_etl/       # Market data API pipeline
-│       └── bronze_data.py    # Stock market data ingestion
+│   ├── market_api_etl/       # Market data API pipeline
+│   │   └── bronze_data.py    # Stock market data ingestion
+│   └── ecommerce_pipeline/   # E-commerce pipeline
+│       ├── extract.py        # CSV data extraction
+│       └── data/             # Source CSV files
 ├── config/                    # Configuration files
 │   └── airflow.cfg           # Airflow settings
 ├── projects/                  # Additional projects
@@ -192,7 +195,9 @@ data_projects/
 │   └── PySpark/              # PySpark analytics
 ├── docker-compose.yaml       # Container orchestration
 ├── Dockerfile                # Airflow container definition
-└── requirements.txt          # Python dependencies
+├── pyproject.toml            # Poetry project configuration
+├── poetry.lock               # Locked dependencies
+└── requirements.txt          # pip dependencies (exported)
 ```
 
 ---
