@@ -1,3 +1,26 @@
+[tool.poetry]
+package-mode = false
+
+[project]
+name = "data-projects"
+version = "0.1.0"
+description = "Data engineering projects with Airflow ETL pipelines"
+requires-python = ">=3.12"
+dependencies = [
+    "pandas",
+    "numpy",
+    "requests",
+    "openpyxl",
+    "sqlalchemy",
+    "psycopg2-binary",
+    "beautifulsoup4",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff",
+]
+
 [tool.ruff]
 line-length = 88
 target-version = "py312"
@@ -20,10 +43,3 @@ ignore = [
 
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["F401"]  # unused imports in __init__ files OK
-"tests/*" = ["B011"]       # assert False OK in tests
-
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-python_files = ["test_*.py"]
-python_functions = ["test_*"]
-addopts = "-v --tb=short"
