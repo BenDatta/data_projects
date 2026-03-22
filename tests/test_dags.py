@@ -15,6 +15,7 @@ REGISTERED_DAGS = [
     "bank_churn_dag.py",
     "alpha_market_data.py",
     "transport_etl.py",
+    "ecommerce_dag.py",
 ]
 
 
