@@ -6,8 +6,8 @@ CREATE TABLE IF NOT EXISTS orders (
     user_id INT,
     primary_product_id INT,
     items_purchased INT,
-    price_usd NUMERIC(10,2),
-    cogs_usd NUMERIC(10,2)
+    price_usd NUMERIC(10, 2),
+    cogs_usd NUMERIC(10, 2)
 );
 
 -- create order_items table
@@ -17,8 +17,8 @@ CREATE TABLE IF NOT EXISTS order_items(
     order_id INT,
     product_id INT,
     is_primary_item INT,
-    price_usd NUMERIC(10,2),
-    cogs_usd NUMERIC(10,2)
+    price_usd NUMERIC(10, 2),
+    cogs_usd NUMERIC(10, 2)
 );
 
 -- create order_item_refund table
@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS order_item_refunds(
     created_at TIMESTAMP,
     order_item_id INT,
     order_id INT,
-    refund_amount_usd NUMERIC(10,2)
+    refund_amount_usd NUMERIC(10, 2)
 );
 
 -- create products table
