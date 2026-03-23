@@ -1,8 +1,8 @@
-from datetime import datetime
+from datetime import datetime  # noqa: I001
 
-from airflow.providers.common.sql.operators.sql import SQLExecuteQueryOperator
-from airflow.providers.postgres.hooks.postgres import PostgresHook
-from airflow.sdk import dag, task
+from airflow.providers.common.sql.operators.sql import SQLExecuteQueryOperator # pyright: ignore[reportMissingImports]
+from airflow.providers.postgres.hooks.postgres import PostgresHook # pyright: ignore[reportMissingImports]
+from airflow.sdk import dag, task # pyright: ignore[reportMissingImports]
 
 from data.ecommerce_pipeline.extract import extract_data
 
