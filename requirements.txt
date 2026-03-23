@@ -1,18 +1,18 @@
-beautifulsoup4==4.14.3 ; python_version >= "3.12"
-certifi==2026.2.25 ; python_version >= "3.12"
-charset-normalizer==3.4.6 ; python_version >= "3.12"
-et-xmlfile==2.0.0 ; python_version >= "3.12"
-greenlet==3.3.2 ; python_version >= "3.12" and (platform_machine == "aarch64" or platform_machine == "ppc64le" or platform_machine == "x86_64" or platform_machine == "amd64" or platform_machine == "AMD64" or platform_machine == "win32" or platform_machine == "WIN32")
-idna==3.11 ; python_version >= "3.12"
-numpy==2.4.3 ; python_version >= "3.12"
-openpyxl==3.1.5 ; python_version >= "3.12"
-pandas==3.0.1 ; python_version >= "3.12"
-psycopg2-binary==2.9.11 ; python_version >= "3.12"
-python-dateutil==2.9.0.post0 ; python_version >= "3.12"
-requests==2.32.5 ; python_version >= "3.12"
-six==1.17.0 ; python_version >= "3.12"
-soupsieve==2.8.3 ; python_version >= "3.12"
-sqlalchemy==2.0.48 ; python_version >= "3.12"
-typing-extensions==4.15.0 ; python_version >= "3.12"
-tzdata==2025.3 ; python_version >= "3.12" and (sys_platform == "win32" or sys_platform == "emscripten")
-urllib3==2.6.3 ; python_version >= "3.12"
+beautifulsoup4==4.14.3
+certifi==2026.2.25
+charset-normalizer==3.4.6
+et-xmlfile==2.0.0
+greenlet==3.3.2
+idna==3.11
+numpy==2.4.3
+openpyxl==3.1.5
+pandas==3.0.1
+psycopg2-binary==2.9.11
+python-dateutil==2.9.0.post0
+requests==2.32.5
+six==1.17.0
+soupsieve==2.8.3
+sqlalchemy==2.0.48
+typing-extensions==4.15.0
+tzdata==2025.3
+urllib3==2.6.3
