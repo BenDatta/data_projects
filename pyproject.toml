@@ -12,6 +12,7 @@ dependencies = [
     "openpyxl",
     "pandas",
     "psycopg2-binary",
+    "pyarrow",
     "requests",
     "sqlalchemy",
 ]

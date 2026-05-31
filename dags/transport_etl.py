@@ -17,15 +17,16 @@ with DAG(
     default_args=default_args,
     tags=["data_analytics"],
 ) as dag:
+    DATA_ROOT = "/opt/airflow/data/transport_etl"
 
     @task
     def extract_city_data() -> str:
-        return "data/transport_etl/city.csv"
+        return f"{DATA_ROOT}/city.csv"
 
     @task
     def city_silver(file_path: str) -> str:
         df = pd.read_csv(file_path)
-        output_path = "data/transport_etl/silver_data/city_silver.parquet"
+        output_path = f"{DATA_ROOT}/silver_data/city_silver.parquet"
         df.to_parquet(output_path, index=False)
         return output_path
 
