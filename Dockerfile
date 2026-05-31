@@ -3,4 +3,4 @@ FROM apache/airflow:3.1.8
 COPY requirements.txt /requirements.txt
 
 RUN pip install --no-cache-dir -r /requirements.txt && \
-    pip install --no-cache-dir apache-airflow-providers-postgres --no-deps
+    pip install --no-cache-dir apache-airflow-providers-postgres==6.6.0 --no-deps

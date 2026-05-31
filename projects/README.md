@@ -9,4 +9,4 @@ Standalone scripts and notebooks (not wired to Airflow `dags/`).
 | `databricks/` | Databricks transport ETL code + local sample data |
 | `PySpark/` | Spark notebooks |
 
-Production orchestration lives at the repo root: `dags/`, `data/`, `docker-compose.yaml`.
+Production orchestration lives at the repository root: `dags/`, `data/`, `docker-compose.yaml`.
