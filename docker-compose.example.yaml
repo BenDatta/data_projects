@@ -1,5 +1,6 @@
 # Copy: cp docker-compose.example.yaml docker-compose.yaml
-# Set .env from .env.example
+# Create .env locally with POSTGRES_PASSWORD, PGADMIN_DEFAULT_PASSWORD, etc.
+# (see docker-compose.example.yaml for required variable names)
 
 ---
 x-airflow-common:
